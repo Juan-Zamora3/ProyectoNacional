@@ -45,29 +45,24 @@ function App() {
 
     try {
       if (isRegister) {
-        // Registro de un nuevo usuario
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
-        // Cifrar la contraseña antes de guardarla
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Guardar usuario en la colección correspondiente
         const collectionName = role === "maestro" ? "maestros" : "estudiantes";
         await setDoc(doc(db, collectionName, user.uid), {
           email,
           role,
-          password: hashedPassword, // Guardar contraseña cifrada
+          password: hashedPassword,
         });
 
         setSuccess(`Usuario registrado con éxito: ${user.email}`);
         setUserRole(role);
       } else {
-        // Inicio de sesión
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
-        // Verificar el rol en la colección correspondiente
         const collectionName = role === "maestro" ? "maestros" : "estudiantes";
         const docRef = doc(db, collectionName, user.uid);
         const docSnap = await getDoc(docRef);
@@ -75,7 +70,6 @@ function App() {
         if (docSnap.exists()) {
           const userData = docSnap.data();
 
-          // Comparar contraseñas
           const isPasswordValid = await bcrypt.compare(password, userData.password);
           if (!isPasswordValid) {
             setError("Contraseña incorrecta. Inténtalo de nuevo.");
@@ -132,7 +126,6 @@ function App() {
   }
 
   if (!role) {
-    // Selector inicial de rol
     return (
       <div className="role-selection-container">
         <h1>Selecciona tu Rol</h1>
@@ -169,11 +162,14 @@ function App() {
         </button>
       </form>
       <p className="toggle-message">
-        {isRegister ? "¿Ya tienes una cuenta?" : "¿No tienes cuenta?"}{" "}
-        <span className="toggle-link" onClick={() => setIsRegister(!isRegister)}>
-          {isRegister ? "Inicia sesión" : "Regístrate"}
-        </span>
+        {isRegister ? "¿Ya tienes una cuenta?" : "¿No tienes cuenta?"}
       </p>
+      <button
+        className="role-btn"
+        onClick={() => setIsRegister(!isRegister)}
+      >
+        {isRegister ? "Inicia sesión" : "Regístrate"}
+      </button>
       <button onClick={() => setRole("")} className="back-btn">
         Volver
       </button>
