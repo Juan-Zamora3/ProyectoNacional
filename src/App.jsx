@@ -33,7 +33,7 @@ function App() {
 
   // Preguntas del cuestionario
   const questions = [
-    {  id: 1, text: "Entiendo algo mejor después de", options: ["probarlo.", "pensarlo detenidamente."] },
+    { id: 1, text: "Entiendo algo mejor después de", options: ["probarlo.", "pensarlo detenidamente."] },
     { id: 2, text: "Preferiría ser considerado", options: ["realista.", "innovador."] },
     { id: 3, text: "Cuando pienso en lo que hice ayer, es más probable que recuerde", options: ["una imagen.", "palabras."] },
     { id: 4, text: "Tiendo a", options: ["entender los detalles de un tema, pero puede que me confunda con la estructura general.", "entender la estructura general, pero puede que me confunda con los detalles."] },
@@ -322,5 +322,7 @@ function App() {
     </div>
   );
 }
+
+
 
 export default App;
