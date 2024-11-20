@@ -1,39 +1,13 @@
 import React, { useState } from "react";
-import "./App.css";
-import app from "./firebaseConfig";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
-import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
-import bcrypt from "bcryptjs";
 import Questionnaire from "./Questionnaire";
 import Results from "./Results";
-import DashboardEstudiante from "./Estudiante/DashboardEstudiante";
-
-// Firebase setup
-const auth = getAuth(app);
-const db = getFirestore(app);
 
 function App() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-  const [age, setAge] = useState("");
-  const [gender, setGender] = useState("");
-  const [role, setRole] = useState(""); // "maestro" o "estudiante"
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-  const [isRegister, setIsRegister] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [showSurvey, setShowSurvey] = useState(false); // Mostrar encuesta
   const [responses, setResponses] = useState({});
-  const [surveyResults, setSurveyResults] = useState(null); // Resultados de las dimensiones
+  const [showResults, setShowResults] = useState(false);
 
-  // Preguntas del cuestionario
   const questions = [
-    {  id: 1, text: "Entiendo algo mejor después de", options: ["probarlo.", "pensarlo detenidamente."] },
+    { id: 1, text: "Entiendo algo mejor después de", options: ["probarlo.", "pensarlo detenidamente."] },
     { id: 2, text: "Preferiría ser considerado", options: ["realista.", "innovador."] },
     { id: 3, text: "Cuando pienso en lo que hice ayer, es más probable que recuerde", options: ["una imagen.", "palabras."] },
     { id: 4, text: "Tiendo a", options: ["entender los detalles de un tema, pero puede que me confunda con la estructura general.", "entender la estructura general, pero puede que me confunda con los detalles."] },
@@ -89,236 +63,32 @@ function App() {
     { id: 54, text: "En mi tiempo libre, prefiero", options: ["hacer actividades en grupo.", "hacer actividades por mi cuenta."] },
     { id: 55, text: "Cuando trabajo en un equipo, suelo", options: ["contribuir activamente en las discusiones.", "realizar mi parte sin mucha interacción."] },
   
+ 
   ];
-
-  const handleRoleSelection = (selectedRole) => {
-    setRole(selectedRole);
-    setError("");
-  };
+  
 
   const handleAnswer = (questionId, answer) => {
-    setResponses((prev) => ({ ...prev, [questionId]: answer }));
+    // Almacena "a" o "b" directamente
+    setResponses({ ...responses, [questionId]: answer });
   };
 
-  const handleSurveySubmit = () => {
-    const allAnswered = questions.every((q) => responses[q.id]);
-    if (!allAnswered) {
-      setError("Por favor responde todas las preguntas antes de continuar.");
-      return;
-    }
-    const calculatedResults = calculateResults();
-    setSurveyResults(calculatedResults);
-    saveSurveyResults(calculatedResults);
+  const handleSubmit = () => {
+    setShowResults(true);
   };
 
-  const calculateResults = () => {
-    const categoryMap = {
-      ACT: [1, 5, 9, 13, 17, 21, 25, 29, 33, 37, 41],
-      SNS: [2, 6, 10, 14, 18, 22, 26, 30, 34, 38, 42],
-      VIS: [3, 7, 11, 15, 19, 23, 27, 31, 35, 39, 43],
-      SEQ: [4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44],
-      SOC: [45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55],
-    };
-
-    const scores = {
-      ACT: { a: 0, b: 0 },
-      SNS: { a: 0, b: 0 },
-      VIS: { a: 0, b: 0 },
-      SEQ: { a: 0, b: 0 },
-      SOC: { a: 0, b: 0 },
-    };
-
-    Object.entries(responses).forEach(([questionId, answer]) => {
-      const id = parseInt(questionId, 10);
-      Object.keys(categoryMap).forEach((category) => {
-        if (categoryMap[category].includes(id)) {
-          if (answer === "a") {
-            scores[category].a += 1;
-          } else if (answer === "b") {
-            scores[category].b += 1;
-          }
-        }
-      });
-    });
-
-    const results = {};
-    Object.entries(scores).forEach(([category, values]) => {
-      if (values.a > values.b) {
-        results[category] =
-          category === "ACT"
-            ? "Activo"
-            : category === "SNS"
-            ? "Sensitivo"
-            : category === "VIS"
-            ? "Visual"
-            : category === "SEQ"
-            ? "Secuencial"
-            : "Social";
-      } else if (values.b > values.a) {
-        results[category] =
-          category === "ACT"
-            ? "Reflexivo"
-            : category === "SNS"
-            ? "Intuitivo"
-            : category === "VIS"
-            ? "Verbal"
-            : category === "SEQ"
-            ? "Global"
-            : "Solitario";
-      } else {
-        results[category] = "Balanceado";
-      }
-    });
-
-    return results;
-  };
-
-  const saveSurveyResults = async (calculatedResults) => {
-    try {
-      const hashedPassword = await bcrypt.hash(password, 10);
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-
-      await setDoc(doc(db, "estudiantes", user.uid), {
-        email,
-        password: hashedPassword,
-        role: "estudiante",
-        name,
-        age,
-        gender,
-        surveyResults: calculatedResults,
-      });
-
-      setSuccess("Datos registrados y resultado de encuesta guardado.");
-      setIsLoggedIn(true);
-      setShowSurvey(false);
-    } catch (err) {
-      setError("Error al guardar los datos: " + err.message);
-    }
-  };
-
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-    setSuccess("");
-
-    if (!email || !email.includes("@")) {
-      setError("Por favor, introduce un correo válido.");
-      return;
-    }
-    if (!password || password.length < 6) {
-      setError("La contraseña debe tener al menos 6 caracteres.");
-      return;
-    }
-    if (isRegister) {
-      setShowSurvey(true);
-    } else {
-      try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
-
-        const docRef = doc(db, "estudiantes", user.uid);
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-          const userData = docSnap.data();
-          const isPasswordValid = await bcrypt.compare(password, userData.password);
-          if (!isPasswordValid) {
-            setError("Contraseña incorrecta. Inténtalo de nuevo.");
-            return;
-          }
-
-          setSuccess(`Inicio de sesión exitoso: ${user.email}`);
-          setIsLoggedIn(true);
-        } else {
-          setError("No se encontró información del usuario.");
-        }
-      } catch (err) {
-        setError("Error: " + err.message);
-      }
-    }
-  };
-
-  if (showSurvey) {
-    return (
-      <div className="survey-container">
-        <h1>Cuestionario de Estilos de Aprendizaje</h1>
+  return (
+    <div className="App">
+      <h1>Cuestionario de Estilos de Aprendizaje</h1>
+      {!showResults ? (
         <Questionnaire
           questions={questions}
           responses={responses}
           handleAnswer={handleAnswer}
-          handleSubmit={handleSurveySubmit}
+          handleSubmit={handleSubmit}
         />
-      </div>
-    );
-  }
-
-  if (isLoggedIn) {
-    return <DashboardEstudiante results={surveyResults} />;
-  }
-
-  if (!role) {
-    return (
-      <div className="role-selection-container">
-        <h1>Selecciona tu Rol</h1>
-        <button onClick={() => handleRoleSelection("estudiante")}>Estudiante</button>
-        <button onClick={() => handleRoleSelection("maestro")}>Maestro</button>
-      </div>
-    );
-  }
-
-  return (
-    <div className="login-container">
-      <h1>{isRegister ? `Registro (${role})` : `Inicio de Sesión (${role})`}</h1>
-      <form onSubmit={handleFormSubmit}>
-        {isRegister && (
-          <>
-            <input
-              type="text"
-              placeholder="Nombre completo"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-            <input
-              type="number"
-              placeholder="Edad"
-              value={age}
-              onChange={(e) => setAge(e.target.value)}
-              required
-            />
-            <select value={gender} onChange={(e) => setGender(e.target.value)} required>
-              <option value="">Selecciona tu género</option>
-              <option value="Masculino">Masculino</option>
-              <option value="Femenino">Femenino</option>
-              <option value="Otro">Otro</option>
-            </select>
-          </>
-        )}
-        <input
-          type="email"
-          placeholder="Correo electrónico"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Contraseña"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit">{isRegister ? "Registrarse" : "Iniciar Sesión"}</button>
-      </form>
-      <p>
-        {isRegister ? "¿Ya tienes una cuenta?" : "¿No tienes cuenta?"}{" "}
-        <button onClick={() => setIsRegister(!isRegister)}>
-          {isRegister ? "Inicia sesión" : "Regístrate"}
-        </button>
-      </p>
-      {error && <p className="error-message">{error}</p>}
-      {success && <p className="success-message">{success}</p>}
+      ) : (
+        <Results responses={responses} />
+      )}
     </div>
   );
 }
