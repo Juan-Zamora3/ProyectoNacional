@@ -1,137 +1,181 @@
 .role-btn {
-  padding: 10px 20px;
-  margin: 10px;
-  font-size: 18px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 18px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 .role-btn:hover {
-  background-color: #0056b3;
+    background-color: #0056b3;
 }
 
 .toggle-message {
-  font-size: 14px;
-  margin-top: 10px;
+    font-size: 14px;
+    margin-top: 10px;
 }
 
 .back-btn {
-  margin-top: 10px;
-  background-color: #ccc;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
-  cursor: pointer;
+    margin-top: 10px;
+    background-color: #ccc;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 .back-btn:hover {
-  background-color: #aaa;
+    background-color: #aaa;
 }
 
 .error-message {
-  color: red;
-  margin-top: 10px;
+    color: red;
+    margin-top: 10px;
 }
 
 .success-message {
-  color: green;
-  margin-top: 10px;
-}
-/* Contenedor principal */
-.survey-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 20px auto;
-  max-width: 600px;
-  padding: 20px;
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: green;
+    margin-top: 10px;
 }
 
+
+/* Contenedor principal */
+
+.survey-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px auto;
+    max-width: 600px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
 /* Títulos */
+
 .survey-container h1 {
-  color: #333;
-  font-size: 24px;
-  margin-bottom: 20px;
-  text-align: center;
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
 .survey-container h2 {
-  color: #555;
-  font-size: 18px;
-  margin-bottom: 10px;
-  text-align: center;
+    color: #555;
+    font-size: 18px;
+    margin-bottom: 10px;
+    text-align: center;
 }
 
+
 /* Preguntas */
+
 .survey-question {
-  width: 100%;
-  margin-bottom: 15px;
-  padding: 10px;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
 }
 
 .survey-question p {
-  margin: 0 0 10px;
-  font-size: 16px;
-  color: #333;
+    margin: 0 0 10px;
+    font-size: 16px;
+    color: #333;
 }
 
 .survey-question label {
-  display: block;
-  margin-bottom: 8px;
-  font-size: 14px;
-  color: #555;
-  cursor: pointer;
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #555;
+    cursor: pointer;
 }
 
+
 /* Botón de enviar */
+
 .submit-btn {
-  padding: 12px 25px;
-  margin-top: 20px;
-  font-size: 16px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+    padding: 12px 25px;
+    margin-top: 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .submit-btn:hover {
-  background-color: #0056b3;
+    background-color: #0056b3;
 }
 
+
 /* Mensajes */
+
 .error-message {
-  color: red;
-  margin-top: 10px;
+    color: red;
+    margin-top: 10px;
 }
 
 .success-message {
-  color: green;
-  margin-top: 10px;
+    color: green;
+    margin-top: 10px;
 }
 
+
 /* Responsive */
+
 @media (max-width: 600px) {
-  .survey-container {
-    padding: 15px;
-  }
+    .survey-container {
+        padding: 15px;
+    }
+    .survey-question p {
+        font-size: 14px;
+    }
+    .submit-btn {
+        font-size: 14px;
+    }
+}
 
-  .survey-question p {
-    font-size: 14px;
-  }
+.survey-question {
+    margin-bottom: 20px;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
 
-  .submit-btn {
-    font-size: 14px;
-  }
+.read-button {
+    margin: 10px 0;
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.read-button:hover {
+    background-color: #0056b3;
+}
+
+.submit-btn {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background-color: #218838;
 }
