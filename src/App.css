@@ -40,3 +40,98 @@
   color: green;
   margin-top: 10px;
 }
+/* Contenedor principal */
+.survey-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px auto;
+  max-width: 600px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Títulos */
+.survey-container h1 {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.survey-container h2 {
+  color: #555;
+  font-size: 18px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Preguntas */
+.survey-question {
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.survey-question p {
+  margin: 0 0 10px;
+  font-size: 16px;
+  color: #333;
+}
+
+.survey-question label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #555;
+  cursor: pointer;
+}
+
+/* Botón de enviar */
+.submit-btn {
+  padding: 12px 25px;
+  margin-top: 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Mensajes */
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
+
+.success-message {
+  color: green;
+  margin-top: 10px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .survey-container {
+    padding: 15px;
+  }
+
+  .survey-question p {
+    font-size: 14px;
+  }
+
+  .submit-btn {
+    font-size: 14px;
+  }
+}
