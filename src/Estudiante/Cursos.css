@@ -1,0 +1,107 @@
+.cursos-container {
+    padding: 20px;
+    text-align: center;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  .course-card {
+    background: linear-gradient(to bottom, #ffffff, #f1f1f1);
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  }
+  
+  .course-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(to bottom, #f9f9f9, #e9e9e9);
+  }
+  
+  .course-image {
+    max-width: 100%;
+    height: 150px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    object-fit: cover;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .course-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-top: 10px;
+  }
+  
+  .back-btn {
+    display: inline-block;
+    margin-bottom: 20px;
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .back-btn:hover {
+    background-color: #0056b3;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  .course-detail h2 {
+    color: #333;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .course-detail p {
+    margin: 15px 0;
+    color: #555;
+    line-height: 1.6;
+  }
+  
+  .course-detail ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+  }
+  
+  .course-detail li {
+    margin: 10px 0;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .activity-link {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .activity-link:hover {
+    text-decoration: underline;
+    color: #0056b3;
+  }
+
+  
+  

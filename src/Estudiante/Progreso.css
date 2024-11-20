@@ -1,0 +1,56 @@
+.progreso-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .progreso-header {
+    background-color: #007bff;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    border-radius: 5px;
+  }
+  
+  .progreso-body {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .progreso-left,
+  .progreso-right {
+    flex: 1;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .progreso-chart {
+    margin-bottom: 20px;
+  }
+  
+  .activity-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .activity-item {
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  }
+  
+  .activity-item h3 {
+    margin: 0;
+    font-size: 18px;
+  }
+  
+  .activity-item p {
+    margin: 5px 0;
+  }
+  
